@@ -48,11 +48,11 @@
 **
 ****************************************************************************/
 
-#include "treemodel.h"
 
 #include <QApplication>
-#include <QFile>
-#include <QTreeView>
+#include "mixertest.h"
+#include <QtCore>
+#include <QtGui>
 
 int main(int argc, char *argv[])
 {
@@ -60,14 +60,15 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    QFile file(":/default.txt");
-    file.open(QIODevice::ReadOnly);
-    TreeModel model(file.readAll());
-    file.close();
 
-    QTreeView view;
-    view.setModel(&model);
-    view.setWindowTitle(QObject::tr("Simple Tree Model"));
-    view.show();
+
+    QWidget window;
+    window.resize(320, 240);
+    window.setWindowTitle (QApplication::translate("mixerTesting", "Mixer Test"));
+    window.show();
+
+    MixerTest mixerTest(&window);
+    mixerTest.show();
+
     return app.exec();
 }

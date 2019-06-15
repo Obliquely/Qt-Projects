@@ -1,11 +1,9 @@
-Clef
-    Treble Clef
-    Base Clef
-    Alto Clef
-    Tenor Clef
-
-Key Signature
-    G Minor
-    B Major
-    F Minor
-    C Major
+Piano
+Voice
+Trumpet
+    Trumpet-A
+    Trumpet-B
+    Trumpet-C
+Oboe
+    Oboe-A
+    Oboe-B
