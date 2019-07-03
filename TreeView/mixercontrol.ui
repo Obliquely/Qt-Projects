@@ -1,21 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>MixerControl</class>
- <widget name="MixerControl" class="QWidget">
+ <widget class="QWidget" name="MixerControl">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>183</width>
+    <height>20</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>20</height>
+   </size>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::TabFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>Track Control</string>
+  </property>
+  <property name="whatsThis">
+   <string>Track Control (what)</string>
+  </property>
+  <property name="accessibleName">
+   <string>Track Control (ac)</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="horizontalSpacing">
+    <number>-1</number>
+   </property>
+   <property name="verticalSpacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="1">
+    <widget class="QToolButton" name="muteButton">
+     <property name="maximumSize">
+      <size>
+       <width>40</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="whatsThis">
+      <string>Mut button</string>
+     </property>
+     <property name="accessibleName">
+      <string>Mute</string>
+     </property>
+     <property name="accessibleDescription">
+      <string>Mutte option</string>
+     </property>
+     <property name="text">
+      <string>M</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="toolButtonStyle">
+      <enum>Qt::ToolButtonTextOnly</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QToolButton" name="soloButton">
+     <property name="maximumSize">
+      <size>
+       <width>40</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="whatsThis">
+      <string>Solo Button</string>
+     </property>
+     <property name="accessibleName">
+      <string>Solo</string>
+     </property>
+     <property name="accessibleDescription">
+      <string>Solo Option</string>
+     </property>
+     <property name="text">
+      <string>S</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="toolButtonStyle">
+      <enum>Qt::ToolButtonTextOnly</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" alignment="Qt::AlignTop">
+    <widget class="QSlider" name="volumeSlider">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="whatsThis">
+      <string>Volume sider</string>
+     </property>
+     <property name="accessibleName">
+      <string>Volume</string>
+     </property>
+     <property name="accessibleDescription">
+      <string>Volume Option</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QSlider::groove:horizontal {
+    background: lightgray;
+    position: absolute; 
+    top: 6px; bottom: 6px;
+}
+
+QSlider::handle:horizontal {
+    width: 10px;
+    background: gray;
+	border: 1px solid;
+     border-color: darkgray;
+    margin: -3px 0px; 
+}
+</string>
+     </property>
+     <property name="minimum">
+      <number>-63</number>
+     </property>
+     <property name="maximum">
+      <number>63</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::TicksAbove</enum>
+     </property>
+     <property name="tickInterval">
+      <number>64</number>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

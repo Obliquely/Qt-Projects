@@ -1,9 +1,10 @@
-Piano
-Voice
-Trumpet
-    Trumpet-A
-    Trumpet-B
-    Trumpet-C
-Oboe
-    Oboe-A
-    Oboe-B
+Piano; 20.0; MuteOn; SoloOn
+Piccolo; 15.0; MuteOn; SoloOff
+Trumpet; 25.0; MuteOff; SoloOff
+    Trumpet-A;  50.0; MuteOff; SoloOff
+    Trumpet-B;  65.0; MuteOff; SoloOff
+    Trumpet-C;  20.0; MuteOff; SoloOff
+Oboe;  35.0; MuteOff; SoloOff
+    Oboe-Blue;  25.0; MuteOff; SoloOff
+    Oboe-Green;  55.0; MuteOff; SoloOff
+Voice;  45.0; MuteOff; SoloOff

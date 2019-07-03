@@ -14,8 +14,9 @@ class MixerControl : public QWidget
 public:
     explicit MixerControl(QWidget *parent = nullptr);
     ~MixerControl();
+    int getVolume();
+    void setVolume(int);
 
-private:
     Ui::MixerControl *ui;
 };
 
