@@ -30,6 +30,7 @@ public slots:
     void itemChanged(QTreeWidgetItem*, int);
 
     void limitSliderMoved(int);
+    void secondaryCheckBoxClicked();
 
 
 private:

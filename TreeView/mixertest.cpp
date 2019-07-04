@@ -18,6 +18,8 @@ MixerTest::MixerTest(QWidget *parent) :
       {
       setupUi(this);
 
+      limitedSlider->setPanMode(true);
+
       trackList = new TrackList();
       trackList->recoverData();
 
@@ -38,6 +40,7 @@ MixerTest::MixerTest(QWidget *parent) :
       connect(verticalButton, SIGNAL(clicked()), this, SLOT(verticalToggle()));
       connect(smartQ, SIGNAL(textChanged(QString)), this, SLOT(qTextChanged(QString)));
       connect(columnToggle, SIGNAL(clicked()), this, SLOT(columnToggled()));
+      connect(secondaryCheckBox, SIGNAL(clicked()), this, SLOT(secondaryCheckBoxClicked()));
 
       connect(mixerTreeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(itemChanged(QTreeWidgetItem*, int)));
 
@@ -87,16 +90,23 @@ MixerTest::~MixerTest()
       delete ui;
       }
 
+void MixerTest::secondaryCheckBoxClicked()
+      {
+      qDebug()<<"secondaryCheckBoxClicked new state = "<<secondaryCheckBox->isChecked();
+      chorusSlider->setSecondaryMode(secondaryCheckBox->isChecked());
+      limitedSlider->setSecondaryMode(secondaryCheckBox->isChecked());
 
+      }
 
 void MixerTest::limitSliderMoved(int value)
       {
 
-      qDebug()<<"limitedSlider value: "<<value;
-      if (value > 80) {
+      if (value <-50) {
 
-            limitedSlider->setValue(80);
+            limitedSlider->setValue(-50);
             }
+
+      limitSpinBox->setValue(value);
 
       }
 

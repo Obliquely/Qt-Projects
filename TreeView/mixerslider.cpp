@@ -4,11 +4,12 @@
 #include <QPainter>
 #include <QStylePainter>
 #include <cmath>
+#include <QApplication>
 
 MixerSlider::MixerSlider(QWidget *parent) :
       QSlider(parent)
       {
-
+      installEventFilter(this);
       }
 
 MixerSlider::~MixerSlider()
@@ -16,93 +17,97 @@ MixerSlider::~MixerSlider()
 
       }
 
+void MixerSlider::mouseDoubleClickEvent(QMouseEvent* mouseEvent)
+      {
+      if (panning) {
+            setValue(0);
+            return;
+            }
+
+      QSlider::mouseDoubleClickEvent(mouseEvent);
+
+      }
+
+void MixerSlider::setSecondaryMode(bool on)
+      {
+
+      secondary = on;
+      repaint();
+
+      }
+
 void MixerSlider::paintEvent(QPaintEvent *ev) {
 
 
+      QColor buttonColor = QApplication::palette().color(QPalette::Button);
+      QColor secondaryColor = QApplication::palette().color(QPalette::Highlight);
 
-
-    QStylePainter painter(this);
-    QStyleOptionSlider opt;
-    initStyleOption(&opt);
-
-    QRect handle = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
-
-
-
-
-    // draw the slider (this is basically copy/pasted from QSlider::paintEvent)
-    //opt.subControls = QStyle::SC_SliderGroove;
-    // painter.drawComplexControl(QStyle::CC_Slider, opt);
-
-    // recreate slider drawing but without adjusting color to reflect value
-    QRect groove_rect = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderGroove, this);
-    groove_rect.setHeight(groove_rect.height() - 2);
-    groove_rect.setTop(groove_rect.top() + 1);
-
-    QPainterPath path;
-    painter.setRenderHint(QPainter::Antialiasing);
-    path.addRoundedRect(groove_rect, 2, 2);
-    QPen pen(QColor("#888888"), 1);
-    painter.setPen(pen);
-    painter.fillPath(path, QColor("#CCCCCC"));
-    painter.drawPath(path);
-
-
-    // draw the slider handle
-    opt.subControls = QStyle::SC_SliderHandle | QStyle::SC_SliderTickmarks;
-    painter.drawComplexControl(QStyle::CC_Slider, opt);
-
-
-
-
-     /* QStyleOptionSlider opt;
-      initStyleOption(&opt);
-
-      opt.subControls = QStyle::SC_SliderGroove | QStyle::SC_SliderHandle;
-
-
-      if (tickPosition() != NoTicks) {
-            opt.subControls |= QStyle::SC_SliderTickmarks;
+      if (secondary) {
+            secondaryColor.setHsv(secondaryColor.hue() + 180 % 360,
+                                  secondaryColor.saturation(),
+                                  secondaryColor.value());
             }
 
+      QColor grooveBackgroundColor;
+      grooveBackgroundColor.setHsv(buttonColor.hue(),
+                         qMin(255, static_cast<int>(buttonColor.saturation())),
+                         qMin(255, static_cast<int>(buttonColor.value()*0.9)));
 
-      //
-      //  virtual QRect subControlRect(ComplexControl cc, const QStyleOptionComplex *opt, SubControl sc, const QWidget *widget = nullptr) const = 0;
+      QColor grooveFillColor;
+      grooveFillColor.setHsv(secondaryColor.hue(),
+                         qMin(255, static_cast<int>(secondaryColor.saturation() * 3)),
+                         qMin(255, static_cast<int>(secondaryColor.value() * 3)));
 
-      QRect groove_rect = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderGroove, this);
-
-      QRect handle_rect = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
-
-      QRect lower_groove = QRect(groove_rect.left(), groove_rect.top() + 1, 1+ (handle_rect.left() - groove_rect.left()), groove_rect.height()-2);
-      QRect upper_groove = QRect(groove_rect.right(), groove_rect.top() + 1,  (handle_rect.right() - groove_rect.right()), groove_rect.height()-2);
-
-
-      qDebug() << "groove rect: "<< groove_rect;
-      qDebug() << "handle rect: "<< handle_rect;
-
-
-      QSlider::paintEvent(ev);      // super class
-
-      QPainter painter(this);
-
-      painter.fillRect(lower_groove, Qt::lightGray);
-      painter.fillRect(upper_groove, Qt::lightGray);
-
-//      QPainterPath handlePath;
-//      handlePath.addRect(handle_rect);
-
-//      QPainterPath path;
-//      painter.setRenderHint(QPainter::Antialiasing);
-
-//      path.addRoundedRect(groove_rect, 5, 2);
-
-//      QPainterPath adjustedPath;
-//      adjustedPath = path.subtracted(handlePath);
+      QColor outlineColor;
+      outlineColor.setHsv(buttonColor.hue(),
+                          qMin(255, static_cast<int>(buttonColor.saturation())),
+                          qMin(255, static_cast<int>(buttonColor.value()*0.6)));
 
 
-//      QPen pen(Qt::lightGray, 0.5);
-//      painter.setPen(pen);
-//      painter.fillPath(adjustedPath, Qt::lightGray);
-//      painter.drawPath(adjustedPath);
-*/
+      QStyleOptionSlider opt;
+      initStyleOption(&opt);
+
+      QRect grooveRect = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderGroove, this);
+      QRect handleRect = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
+
+      int handleMargin = 3;
+      QRect lowerGroove = QRect(grooveRect.left(), grooveRect.top(), handleMargin + handleRect.left(), grooveRect.height());
+      QRect upperGroove = QRect(handleRect.right() - handleMargin, grooveRect.top(), (grooveRect.right() - handleRect.right()) + handleMargin, grooveRect.height());
+
+      QLinearGradient lowerGradient;
+
+      lowerGradient.setStart(lowerGroove.center().x(), lowerGroove.top());
+      lowerGradient.setFinalStop(lowerGroove.center().x(), lowerGroove.bottom());
+
+      lowerGradient.setColorAt(0, grooveFillColor.darker(110));
+      lowerGradient.setColorAt(1, grooveFillColor.lighter(110));
+
+      QLinearGradient upperGradient;
+
+
+      upperGradient.setStart(upperGroove.center().x(), upperGroove.top());
+      upperGradient.setFinalStop(upperGroove.center().x(), upperGroove.bottom());
+
+      upperGradient.setColorAt(0, grooveBackgroundColor.darker(110));
+      upperGradient.setColorAt(1, grooveBackgroundColor.lighter(110));
+
+
+      QStylePainter painter(this);
+      painter.setBrush(panning ? upperGradient : lowerGradient);
+
+      // recreate slider drawing but without adjusting color to reflect value
+      painter.setRenderHint(QPainter::Antialiasing);
+      painter.setPen(QPen(outlineColor)); // QApplication::palette().color(QPalette::Text)));
+
+
+      painter.drawRect(lowerGroove.adjusted(1, 1, -2, -2));
+
+      painter.setBrush(upperGradient);
+      painter.drawRect(upperGroove.adjusted(1, 1, -2, -2));
+
+
+      // draw the slider handle and tick marks
+      opt.subControls = QStyle::SC_SliderHandle | QStyle::SC_SliderTickmarks;
+      painter.drawComplexControl(QStyle::CC_Slider, opt);
+
       }

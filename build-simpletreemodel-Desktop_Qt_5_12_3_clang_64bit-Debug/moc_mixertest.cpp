@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MixerTest_t {
-    QByteArrayData data[10];
-    char stringdata0[129];
+    QByteArrayData data[11];
+    char stringdata0[154];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,13 +40,14 @@ QT_MOC_LITERAL(5, 50, 18), // "adjustHeaderWidths"
 QT_MOC_LITERAL(6, 69, 13), // "columnToggled"
 QT_MOC_LITERAL(7, 83, 11), // "itemChanged"
 QT_MOC_LITERAL(8, 95, 16), // "QTreeWidgetItem*"
-QT_MOC_LITERAL(9, 112, 16) // "limitSliderMoved"
+QT_MOC_LITERAL(9, 112, 16), // "limitSliderMoved"
+QT_MOC_LITERAL(10, 129, 24) // "secondaryCheckBoxClicked"
 
     },
     "MixerTest\0showDetail\0\0verticalToggle\0"
     "qTextChanged\0adjustHeaderWidths\0"
     "columnToggled\0itemChanged\0QTreeWidgetItem*\0"
-    "limitSliderMoved"
+    "limitSliderMoved\0secondaryCheckBoxClicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,7 +57,7 @@ static const uint qt_meta_data_MixerTest[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -64,13 +65,14 @@ static const uint qt_meta_data_MixerTest[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x0a /* Public */,
-       3,    0,   50,    2, 0x0a /* Public */,
-       4,    1,   51,    2, 0x0a /* Public */,
-       5,    0,   54,    2, 0x0a /* Public */,
-       6,    0,   55,    2, 0x0a /* Public */,
-       7,    2,   56,    2, 0x0a /* Public */,
-       9,    1,   61,    2, 0x0a /* Public */,
+       1,    0,   54,    2, 0x0a /* Public */,
+       3,    0,   55,    2, 0x0a /* Public */,
+       4,    1,   56,    2, 0x0a /* Public */,
+       5,    0,   59,    2, 0x0a /* Public */,
+       6,    0,   60,    2, 0x0a /* Public */,
+       7,    2,   61,    2, 0x0a /* Public */,
+       9,    1,   66,    2, 0x0a /* Public */,
+      10,    0,   69,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -80,6 +82,7 @@ static const uint qt_meta_data_MixerTest[] = {
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 8, QMetaType::Int,    2,    2,
     QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -97,6 +100,7 @@ void MixerTest::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 4: _t->columnToggled(); break;
         case 5: _t->itemChanged((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 6: _t->limitSliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: _t->secondaryCheckBoxClicked(); break;
         default: ;
         }
     }
@@ -133,13 +137,13 @@ int MixerTest::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }
