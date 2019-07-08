@@ -4,13 +4,11 @@
 #include <QTreeView>
 #include <QPushButton>
 #include <QAbstractButton>
-#include <QTreeWidget>
-#include <QTreeWidgetItem>
+
 #include <QDebug>
 #include <QtCore>
 #include <QtGui>
 #include <QSplitter>
-#include "noneditableitemdelegate.h"
 
 MixerTest::MixerTest(QWidget *parent) :
       QDialog(parent),
@@ -18,10 +16,38 @@ MixerTest::MixerTest(QWidget *parent) :
       {
       setupUi(this);
 
-      limitedSlider->setPanMode(true);
+      setupFilterCombo();
+      setupSplitter();
 
       trackList = new TrackList();
       trackList->recoverData();
+
+      mixerTreeWidget->setupAdditionalUi();
+      mixerTreeWidget->setTrackList(trackList);
+
+      panSlider->setPanMode(true);
+
+      setupSignalsAndSlots();
+      }
+
+MixerTest::~MixerTest()
+      {
+      delete ui;
+      }
+
+
+void MixerTest::setupSignalsAndSlots()
+      {
+      connect(showDetailsButton, SIGNAL(clicked()), this, SLOT(showDetail()));
+      connect(verticalButton, SIGNAL(clicked()), this, SLOT(verticalToggle()));
+      connect(smartQ, SIGNAL(textChanged(QString)), this, SLOT(qTextChanged(QString)));
+      connect(columnToggle, SIGNAL(clicked()), mixerTreeWidget, SLOT(columnToggled()));
+      connect(secondaryCheckBox, SIGNAL(clicked()), this, SLOT(secondaryCheckBoxClicked()));
+      connect(limitedSlider, SIGNAL(valueChanged(int)), this, SLOT(limitSliderMoved(int)));
+      }
+
+void MixerTest::setupSplitter()
+      {
 
       QGridLayout* gridLayout = new QGridLayout(this);
       gridLayout->setMargin(0);
@@ -36,166 +62,86 @@ MixerTest::MixerTest(QWidget *parent) :
       splitter->setCollapsible(0, false);
       splitter->setCollapsible(1, false);
 
-      connect(showDetailsButton, SIGNAL(clicked()), this, SLOT(showDetail()));
-      connect(verticalButton, SIGNAL(clicked()), this, SLOT(verticalToggle()));
-      connect(smartQ, SIGNAL(textChanged(QString)), this, SLOT(qTextChanged(QString)));
-      connect(columnToggle, SIGNAL(clicked()), this, SLOT(columnToggled()));
-      connect(secondaryCheckBox, SIGNAL(clicked()), this, SLOT(secondaryCheckBoxClicked()));
-
-      connect(mixerTreeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(itemChanged(QTreeWidgetItem*, int)));
-
-      connect(limitedSlider, SIGNAL(valueChanged(int)), this, SLOT(limitSliderMoved(int)));
-
       splitter->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
       splitter->adjustSize();
+      }
+
+void MixerTest::setupFilterCombo() {
 
 
-      mixerTreeWidget->setDragEnabled(true);
+      patchCombo->addItems({"Abc", "Def", "Ghi", "Piano", "Pianoforte", "Trumpet", "Trombone", "Piccolo", "Fortepiano"});
 
-      mixerTreeWidget->setSelectionMode(QAbstractItemView::SingleSelection);
-      mixerTreeWidget->viewport()->setAcceptDrops(true);
-      mixerTreeWidget->setDropIndicatorShown(true);
-      mixerTreeWidget->setDragDropMode(QAbstractItemView::InternalMove);
+      allPatchItems = {"Trumpet", "Violin 1", "Violin 2", "Violincello", "Fortepiano", "Piano", "Kawai Piano", "Trombone", "Viola", "EMS2", "Electic Guitar", "Bass Guitar", "Double Bass", "Violin 3", "Oboe", "Clarinet", "Saxophone", "French Horn"};
 
-      configureHeader(mixerTreeWidget);
+      clearPatchFilter();
 
-      for (MixerTrack* mixerTrack : trackList->tracks()) {
+      connect(filterBox, SIGNAL(textEdited(QString)), this, SLOT(patchFilterChanged(QString)));
+      connect(clearFilter, SIGNAL(clicked()), this, SLOT(clearPatchFilter()));
 
-            QTreeWidgetItem* item = mixerTrack->treeWidgetItem;
-            item->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled);
-            mixerTreeWidget->setItemDelegateForColumn(1, new NonEditableItemDelegate (mixerTreeWidget)); // make this one non-editable
-
-
-            mixerTreeWidget->addTopLevelItem(item);
-
-            mixerTreeWidget->setItemWidget(mixerTrack->treeWidgetItem, 1, mixerTrack->mixerControl);
-
-            if (mixerTrack->children.count() == 0)
-                  continue;
-
-            QList<MixerTrack*> children = mixerTrack->children;
-
-            for (int index = 0; index < children.count(); index++) {
-                  MixerTrack* subTrack = mixerTrack->children[index];
-                  mixerTrack->treeWidgetItem->addChild(subTrack->treeWidgetItem);
-                  mixerTreeWidget->setItemWidget(subTrack->treeWidgetItem, 1, subTrack->mixerControl);
-                  }
-
-            }
 
       }
 
-MixerTest::~MixerTest()
+void MixerTest::patchFilterChanged(QString filter) {
+      qDebug()<<"patchFilterChanged";
+      QList<QString> filteredList;
+
+      for (QString string : allPatchItems) {
+
+            if (string.contains(filter, Qt::CaseInsensitive)) {
+                  filteredList.append(string);
+                  }
+            }
+
+      standardPatchCombo->clear();
+      standardPatchCombo->addItems(filteredList);
+
+
+      int count = standardPatchCombo->count();
+      bool isAllItems = (count == allPatchItems.count());
+
+      QString suffix = (count == 1) ? "patch" : "patches";
+      QString prefix = isAllItems ? "All" : QString::number(count);
+
+      QString formattedCount = QString("%1  %2").arg(prefix).arg(suffix);
+
+      patchCount->setText(formattedCount);
+
+      clearFilter->setEnabled(!isAllItems);
+
+
+      }
+
+void MixerTest::clearPatchFilter()
       {
-      delete ui;
+
+      filterBox->setText("");
+      patchFilterChanged("");
+
       }
 
 void MixerTest::secondaryCheckBoxClicked()
       {
       qDebug()<<"secondaryCheckBoxClicked new state = "<<secondaryCheckBox->isChecked();
-      chorusSlider->setSecondaryMode(secondaryCheckBox->isChecked());
       limitedSlider->setSecondaryMode(secondaryCheckBox->isChecked());
+      panSlider->setSecondaryMode(secondaryCheckBox->isChecked());
 
       }
 
 void MixerTest::limitSliderMoved(int value)
       {
 
-      if (value <-50) {
+      if (value <25) {
+            limitedSlider->setValue(25);
+            }
 
-            limitedSlider->setValue(-50);
+      if (value > 105) {
+            limitedSlider->setValue(105);
             }
 
       limitSpinBox->setValue(value);
 
       }
 
-
-void MixerTest::itemChanged(QTreeWidgetItem* item, int column)
-      {
-      qDebug()<<"an item has changed. New text is: "<<item->text(column);
-
-      // update the model
-      // FIND the mixerTrack associated with the model
-      // current design is BAD - ought to be able to pull it off the item by sublcassing
-      // QTreeWidgetItem
-
-      int index = mixerTreeWidget->indexOfTopLevelItem(item); // this is a bit of hack!
-
-      QList<MixerTrack*> tracks = trackList->tracks();
-
-      if (column == 0) {
-            tracks[index]->setName(item->text(column));
-            }
-      else if (column == 2) {
-            tracks[index]->setDescription(item->text(column));
-            }
-
-      // save it to disk
-      trackList->saveData();
-
-      }
-
-void MixerTest::adjustHeaderWidths()
-      {
-      QTreeWidget* treeWidget = mixerTreeWidget;
-      QHeaderView* header = treeWidget->header();
-
-      if (treeWidget->columnCount() == 2) {
-
-            int width = treeWidget->width();
-
-            double ratio = 0.4;
-            int margin = 1;
-
-            int column0 = int(double(width) * ratio) - margin;
-            int column1 = int(double(width) * (1-ratio) -margin);
-
-            if (column0 > 300) {
-                  column0 = 300;
-                  column1 = width - 300 - margin;
-                  }
-
-            header->resizeSection(0, column0);
-            header->resizeSection(1, column1);
-            }
-
-      else if (treeWidget->columnCount() == 3) {
-
-            int width = treeWidget->width();
-
-            double ratio = 0.4;
-
-            int margin = 5;
-
-            int column0 = int(double(width) * ratio);
-            int column1 = int(double(width) * ( (1-ratio) /2 ));
-            int column2 = int(double(width) * ( (1-ratio) /2 ));
-
-            if (column0 > 300) {
-                  column0 = 300;
-                  column1 = (width - 300) /2;
-                   column2 = (width - 300) /2;
-                  }
-
-            header->resizeSection(0, column0 - margin);
-            header->resizeSection(1, column1 - margin);
-            header->resizeSection(1, column2 - margin);
-            }
-
-
-      }
-
-void MixerTest::configureHeader(QTreeWidget* treeWidget)
-      {
-      treeWidget->setColumnCount(2);
-      QHeaderView* header = treeWidget->header();
-      header->setSectionResizeMode(0, QHeaderView::Fixed);
-      header->setSectionResizeMode(1, QHeaderView::Fixed);
-
-      connect(header, SIGNAL(geometriesChanged()), this, SLOT(adjustHeaderWidths()));
-      adjustHeaderWidths();
-      }
 
 
 void MixerTest::qTextChanged(QString string)
@@ -211,7 +157,7 @@ void MixerTest::qTextChanged(QString string)
             QString current = string.at(i); // "Hello"
             if (current ==  "\"")
                   {
-                        qDebug()<<"QUOTE at "<<i;
+                  qDebug()<<"QUOTE at "<<i;
                   }
 
             bool doubleQuote = string.at(i) == "\"";
@@ -228,7 +174,7 @@ void MixerTest::qTextChanged(QString string)
                   }
             string.replace(i, 1, replacement);
             previous = string.at(i);
-         }
+            }
 
       smartQ->setText(string);
       }
@@ -236,33 +182,7 @@ void MixerTest::qTextChanged(QString string)
 
 
 
-void MixerTest::columnToggled()
-      {
 
-      int columnCount = mixerTreeWidget->columnCount();
-
-      if (columnCount == 2) {
-
-            mixerTreeWidget->setColumnCount(3);
-            QTreeWidgetItem* headerItem = mixerTreeWidget->headerItem();
-            qDebug()<<"headeritem = "<<mixerTreeWidget->headerItem();
-            headerItem->setText(0, "Name");
-            headerItem->setText(1, "Adjustments");
-            headerItem->setText(2, "Bonus");
-            }
-      else {
-            mixerTreeWidget->setColumnCount(2);
-
-            QTreeWidgetItem* headerItem = mixerTreeWidget->headerItem();
-            qDebug()<<"headeritem = "<<mixerTreeWidget->headerItem();
-            headerItem->setText(0, "Title");
-            headerItem->setText(1, "Volume");
-            }
-
-      adjustHeaderWidths();
-
-
-      }
 
 #define MAX_WIDGET_LENGTH 16777215
 
@@ -320,45 +240,3 @@ void MixerTest::verticalToggle()
 
       }
 
-/*
-
-      int treeWidgetWidth = mixerTreeWidget->width();
-      int treeWidgetHeight = mixerTreeWidget->height();
-
-      if (isShowingDetail == true) {
-            // seek to constrain the size
-
-            // case where it's OK to get wider
-
-            // pin the height and width of the treeView
-            mixerTreeWidget->setMaximumHeight(treeWidgetHeight);
-            mixerTreeWidget->setMinimumHeight(treeWidgetHeight);
-            mixerTreeWidget->setMinimumWidth(treeWidgetWidth);
-            mixerTreeWidget->setMaximumWidth(treeWidgetWidth);
-
-            // add the details view
-            updateUi();
-            qDebug()<<"SHOW DETAILS treeWidgetWidth before:"<<treeWidgetWidth<<" and after: "<<mixerTreeWidget->width();
-            this->adjustSize();
-
-            mixerTreeWidget->setMinimumHeight(200);
-            mixerTreeWidget->setMaximumHeight(MAX_WIDGET_LENGTH);
-            mixerTreeWidget->setMinimumWidth(200);
-            mixerTreeWidget->setMaximumWidth(MAX_WIDGET_LENGTH);
-            }
-      else {
-            // case where we want to get narrower, but keep the size of the treeWidget
-            mixerTreeWidget->setMaximumHeight(treeWidgetHeight);
-            mixerTreeWidget->setMinimumHeight(treeWidgetHeight);
-            mixerTreeWidget->setMinimumWidth(treeWidgetWidth);
-            mixerTreeWidget->setMaximumWidth(treeWidgetWidth);
-            updateUi();
-            this->adjustSize();
-            qDebug()<<"HIDE DETAILS treeWidgetWidth before:"<<treeWidgetWidth<<" and after: "<<mixerTreeWidget->width();
-            mixerTreeWidget->setMinimumHeight(200);
-            mixerTreeWidget->setMaximumHeight(MAX_WIDGET_LENGTH);
-            mixerTreeWidget->setMinimumWidth(200);
-            mixerTreeWidget->setMaximumWidth(MAX_WIDGET_LENGTH);
-            }
-      }
-*/

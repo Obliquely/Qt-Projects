@@ -59,50 +59,6 @@
 #include "flexibletree.h"
 #include <QStyleFactory>
 
-/*
-class AccessibleTreeWidget : public QAccessibleTableInterface
-      {
-
-      QTreeWidget* treeWidget;
-      public:
-      AccessibleTreeWidget(QTreeWidget* treeWidget) : QAccessibleTableInterface ()
-            {
-                  this->treeWidget = treeWidget;
-            }
-
-      QAccessibleInterface* caption() const
-      {
-      // what do I return??
-            return nullptr;
-      }
-
-      QAccessibleInterface *child(int index) const override
-            {
-            qDebug()<<"Matt test: request for QAccessibleInterface for child: "<<index;
-            return new QAccessibleValueInterface
-            }
-
-      QString text(QAccessible::Text text) const override
-            {
-            if (text == QAccessible::Name)
-                  return "Matt's test tree";
-            return QAccessibleWidget::text(text);
-            }
-      };
-
-
-QAccessibleTableInterface *treeFactory(const QString &classname, QObject *object)
-{
-    QAccessibleTableInterface *interface = nullptr;
-
-    if (classname == QLatin1String("QTreeWidget") && object && object->isWidgetType())
-        interface = new AccessibleTreeWidget(static_cast<QTreeWidget *>(object));
-
-    return interface;
-}
-
-*/
-
 int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(simpletreemodel);
@@ -111,24 +67,17 @@ int main(int argc, char *argv[])
 
     QApplication::setStyle(QStyleFactory::create("Fusion"));
 
-    // QAccessible::installFactory(treeFactory);
-
-    QWidget window;
-    window.resize(320, 240);
+    MixerTest window;
+    window.resize(640, 400);
     window.setWindowTitle (QApplication::translate("mixerTesting", "Mixer Test"));
     window.show();
 
-    /*
-    LearningLambda* learning = new LearningLambda();
-    learning->testMe();
-     */
 
-    FlexibleTree widget;
-    widget.show();
+//    LearningLambda* learning = new LearningLambda();
+//    learning->testMe();
 
-    MixerTest mixerTest(&window);
-
-    mixerTest.show();
+//    FlexibleTree widget;
+//    widget.show();
 
     return app.exec();
 }

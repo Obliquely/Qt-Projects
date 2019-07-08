@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>627</width>
+    <width>685</width>
     <height>594</height>
    </rect>
   </property>
@@ -28,10 +28,10 @@
   <widget class="QWidget" name="secondaryWidget" native="true">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>330</x>
      <y>30</y>
-     <width>294</width>
-     <height>347</height>
+     <width>301</width>
+     <height>461</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -62,90 +62,20 @@
     <string>Mixer Tea Details</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_3">
-    <item row="5" column="2">
-     <widget class="QLabel" name="label_2">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_13">
       <property name="text">
-       <string>Channel:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       <string>Patch:</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="1" colspan="2">
-     <widget class="QSlider" name="horizontalSlider">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>20</height>
-       </size>
-      </property>
+    <item row="7" column="1" colspan="2">
+     <widget class="MixerSlider" name="panSlider">
       <property name="minimum">
        <number>-63</number>
       </property>
       <property name="maximum">
        <number>63</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="tickPosition">
-       <enum>QSlider::TicksBelow</enum>
-      </property>
-      <property name="tickInterval">
-       <number>64</number>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="0">
-     <widget class="QLabel" name="label_10">
-      <property name="text">
-       <string>Pan:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="11" column="1">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="label">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Ports:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1" colspan="2">
-     <widget class="MixerSlider" name="chorusSlider">
-      <property name="maximum">
-       <number>127</number>
       </property>
       <property name="pageStep">
        <number>16</number>
@@ -161,17 +91,7 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="1">
-     <widget class="QSpinBox" name="spinBox">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>20</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="1" colspan="2">
+    <item row="11" column="1" colspan="2">
      <widget class="QDial" name="dial">
       <property name="minimumSize">
        <size>
@@ -193,23 +113,89 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="3">
-     <widget class="QSpinBox" name="spinBox_4">
-      <property name="minimumSize">
+    <item row="14" column="1">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
        <size>
-        <width>40</width>
-        <height>0</height>
+        <width>20</width>
+        <height>40</height>
        </size>
       </property>
-      <property name="maximumSize">
+     </spacer>
+    </item>
+    <item row="8" column="2">
+     <widget class="QLabel" name="label_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Channel:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4" colspan="3">
+     <widget class="QLabel" name="patchCount">
+      <property name="text">
+       <string>n patches</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QSpinBox" name="spinBox">
+      <property name="minimumSize">
        <size>
-        <width>40</width>
-        <height>16777215</height>
+        <width>0</width>
+        <height>20</height>
        </size>
       </property>
      </widget>
     </item>
-    <item row="13" column="0" colspan="4">
+    <item row="6" column="0">
+     <widget class="QLabel" name="label_11">
+      <property name="text">
+       <string>Limited</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>Smart Q</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0">
+     <widget class="QLabel" name="label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Ports:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="16" column="0" colspan="7">
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
        <widget class="QLabel" name="label_9">
@@ -249,27 +235,74 @@
       </item>
      </layout>
     </item>
-    <item row="6" column="0">
-     <widget class="QLabel" name="label_3">
+    <item row="9" column="1" colspan="2">
+     <widget class="QSlider" name="horizontalSlider">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="minimum">
+       <number>-63</number>
+      </property>
+      <property name="maximum">
+       <number>63</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::TicksBelow</enum>
+      </property>
+      <property name="tickInterval">
+       <number>64</number>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1" colspan="2">
+     <widget class="QLineEdit" name="filterBox"/>
+    </item>
+    <item row="10" column="0">
+     <widget class="QLabel" name="label_4">
       <property name="text">
-       <string>Reverb:</string>
+       <string>Chorus</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>Patch:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    <item row="5" column="1" colspan="6">
+     <widget class="PatchComboBox" name="patchCombo">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>20</height>
+       </size>
       </property>
      </widget>
     </item>
-    <item row="3" column="3">
+    <item row="10" column="1" colspan="2">
+     <widget class="QSlider" name="horizontalSlider_2">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::TicksBelow</enum>
+      </property>
+      <property name="tickInterval">
+       <number>16</number>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="6">
      <widget class="QSpinBox" name="spinBox_6">
       <property name="minimumSize">
        <size>
@@ -285,7 +318,114 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1" colspan="3">
+    <item row="7" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Pan</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1" colspan="2">
+     <widget class="MixerSlider" name="limitedSlider">
+      <property name="maximum">
+       <number>127</number>
+      </property>
+      <property name="pageStep">
+       <number>16</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::TicksBelow</enum>
+      </property>
+      <property name="tickInterval">
+       <number>16</number>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2" colspan="5">
+     <widget class="QRadioButton" name="radioButton_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>80</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Instrument</string>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="6">
+     <widget class="QSpinBox" name="spinBox_4">
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>40</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="6">
+     <widget class="QSpinBox" name="spinBox_5">
+      <property name="minimumSize">
+       <size>
+        <width>40</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>40</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
+     <widget class="QLabel" name="label_10">
+      <property name="text">
+       <string>Pan:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="6">
+     <widget class="QSpinBox" name="limitSpinBox">
+      <property name="minimum">
+       <number>-63</number>
+      </property>
+      <property name="maximum">
+       <number>63</number>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_12">
+      <property name="text">
+       <string>Filter:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1" colspan="6">
      <widget class="QLineEdit" name="smartQ">
       <property name="minimumSize">
        <size>
@@ -303,40 +443,38 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="label_7">
+    <item row="9" column="0">
+     <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>Pan</string>
+       <string>Reverb:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
-    <item row="4" column="1" colspan="2">
-     <widget class="MixerSlider" name="limitedSlider">
-      <property name="minimum">
-       <number>-63</number>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>Style:</string>
       </property>
-      <property name="maximum">
-       <number>63</number>
-      </property>
-      <property name="pageStep">
-       <number>16</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="tickPosition">
-       <enum>QSlider::TicksBelow</enum>
-      </property>
-      <property name="tickInterval">
-       <number>16</number>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
-    <item row="5" column="3">
-     <widget class="QSpinBox" name="spinBox_5">
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Clever</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="6">
+     <widget class="QSpinBox" name="spinBox_2">
       <property name="minimumSize">
        <size>
         <width>40</width>
@@ -351,15 +489,8 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_6">
-      <property name="text">
-       <string>Style:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
+    <item row="4" column="1" colspan="6">
+     <widget class="QComboBox" name="standardPatchCombo"/>
     </item>
     <item row="1" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0">
@@ -387,107 +518,17 @@
       </item>
      </layout>
     </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_11">
+    <item row="2" column="3">
+     <widget class="QToolButton" name="clearFilter">
       <property name="text">
-       <string>Chorus</string>
+       <string>R</string>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      <property name="icon">
+       <iconset resource="simpletreemodel.qrc">
+        <normaloff>:/default.txt</normaloff>:/default.txt</iconset>
       </property>
-     </widget>
-    </item>
-    <item row="1" column="2" colspan="2">
-     <widget class="QRadioButton" name="radioButton_2">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>80</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Instrument</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="3">
-     <widget class="QSpinBox" name="limitSpinBox">
-      <property name="minimum">
-       <number>-63</number>
-      </property>
-      <property name="maximum">
-       <number>63</number>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="0">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>Chorus</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_8">
-      <property name="text">
-       <string>Smart Q</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="1" colspan="2">
-     <widget class="QSlider" name="horizontalSlider_2">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="tickPosition">
-       <enum>QSlider::TicksBelow</enum>
-      </property>
-      <property name="tickInterval">
-       <number>16</number>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1" colspan="3">
-     <widget class="QComboBox" name="patchComboBox">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>20</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="3">
-     <widget class="QSpinBox" name="spinBox_2">
-      <property name="minimumSize">
-       <size>
-        <width>40</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>40</width>
-        <height>16777215</height>
-       </size>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextOnly</enum>
       </property>
      </widget>
     </item>
@@ -516,7 +557,7 @@
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="2" column="0">
-     <widget class="QTreeWidget" name="mixerTreeWidget">
+     <widget class="MixerTreeWidget" name="mixerTreeWidget">
       <property name="minimumSize">
        <size>
         <width>300</width>
@@ -538,9 +579,20 @@
       <property name="selectionBehavior">
        <enum>QAbstractItemView::SelectItems</enum>
       </property>
+      <property name="allColumnsShowFocus">
+       <bool>false</bool>
+      </property>
+      <property name="columnCount">
+       <number>2</number>
+      </property>
       <column>
        <property name="text">
         <string notr="true">1</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string notr="true">2</string>
        </property>
       </column>
      </widget>
@@ -616,24 +668,46 @@
    <extends>QSlider</extends>
    <header>mixerslider.h</header>
   </customwidget>
+  <customwidget>
+   <class>PatchComboBox</class>
+   <extends>QComboBox</extends>
+   <header>patchcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MixerTreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>mixertreewidget.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>mixerTreeWidget</tabstop>
+  <tabstop>secondaryCheckBox</tabstop>
   <tabstop>columnToggle</tabstop>
   <tabstop>verticalButton</tabstop>
   <tabstop>showDetailsButton</tabstop>
+  <tabstop>mixerTreeWidget</tabstop>
+  <tabstop>secondaryWidget</tabstop>
   <tabstop>smartQ</tabstop>
-  <tabstop>radioButton_3</tabstop>
-  <tabstop>radioButton_2</tabstop>
-  <tabstop>patchComboBox</tabstop>
-  <tabstop>limitedSlider</tabstop>
-  <tabstop>limitSpinBox</tabstop>
-  <tabstop>spinBox</tabstop>
-  <tabstop>spinBox_5</tabstop>
+  <tabstop>panSlider</tabstop>
   <tabstop>horizontalSlider</tabstop>
   <tabstop>horizontalSlider_2</tabstop>
+  <tabstop>dial</tabstop>
+  <tabstop>spinBox_5</tabstop>
+  <tabstop>limitSpinBox</tabstop>
+  <tabstop>patchCombo</tabstop>
   <tabstop>spinBox_4</tabstop>
+  <tabstop>radioButton_2</tabstop>
+  <tabstop>spinBox</tabstop>
+  <tabstop>filterBox</tabstop>
+  <tabstop>spinBox_6</tabstop>
+  <tabstop>limitedSlider</tabstop>
+  <tabstop>spinBox_2</tabstop>
+  <tabstop>standardPatchCombo</tabstop>
+  <tabstop>clearFilter</tabstop>
+  <tabstop>radioButton_3</tabstop>
+  <tabstop>toolButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="simpletreemodel.qrc"/>
+ </resources>
  <connections/>
 </ui>

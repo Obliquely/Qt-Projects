@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <QPainter>
 #include <QStylePainter>
-#include <cmath>
 #include <QApplication>
 
 MixerSlider::MixerSlider(QWidget *parent) :

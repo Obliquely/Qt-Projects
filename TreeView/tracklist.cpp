@@ -27,7 +27,6 @@ void TrackList::saveData()
 
       file.close();
 
-      qDebug()<<"saved data: "<<test;
       }
 
 void TrackList::recoverData()
@@ -51,7 +50,6 @@ void TrackList::recoverData()
 
       QString recovered = file.readAll();
       file.close();
-      qDebug()<<"recoverData has read: "<<recovered;
 
       dataFromString(recovered);
 
@@ -68,10 +66,6 @@ void TrackList::importTestData()
       file.close();
 
       dataFromString(source);
-
-      for (MixerTrack* mixerTrack : _tracks) {
-            qDebug()<<mixerTrack->name();
-            }
       }
 
 
@@ -129,7 +123,6 @@ void TrackList::dataFromString(const QString source)
             if (!lineData.isEmpty()) {
                   // Read the column data from the rest of the line.
                   QStringList columnStrings = lineData.split(";", QString::SkipEmptyParts);
-                  qDebug()<<columnStrings;
                   QList<QVariant> columnData;
                   for (int column = 0; column < columnStrings.count(); ++column)
                         columnData << columnStrings[column];
@@ -141,25 +134,21 @@ void TrackList::dataFromString(const QString source)
 
                   if (columnStrings.count() >= 2) {
                         int volume = int(columnStrings[1].trimmed().toFloat());
-                        qDebug()<<"Volume for '"<<name<<"' is: "<<volume;
                         node->setVolume(volume);
                         }
 
                   if (columnStrings.count() >= 3) {
                         bool muteOn = columnStrings[2].trimmed() == "MuteOn";
-                        qDebug()<<"muteOn for '"<<name<<"' is: "<<muteOn;
                         node->setMuteOn(muteOn);
                         }
 
                   if (columnStrings.count() >= 4) {
                         bool soloOn = columnStrings[3].trimmed() == "SoloOn";
-                        qDebug()<<"soloOn for '"<<name<<"' is: "<<soloOn;
                         node->setSoloOn(soloOn);
                         }
 
                   if (columnStrings.count() >= 5) {
                         QString description = columnStrings[4].trimmed();
-                        qDebug()<<"description for '"<<name<<"' is: "<<description;
                         node->setDescription(description);
                         }
 

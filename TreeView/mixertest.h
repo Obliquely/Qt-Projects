@@ -15,6 +15,8 @@ class MixerTest : public QDialog, Ui::MixerTest
 {
     Q_OBJECT
 
+     QList<QString> allPatchItems;
+
 public:
     explicit MixerTest(QWidget *parent = nullptr);
     ~MixerTest();
@@ -25,13 +27,12 @@ public slots:
     void showDetail();
     void verticalToggle();
     void qTextChanged(QString);
-    void adjustHeaderWidths();
-    void columnToggled();
-    void itemChanged(QTreeWidgetItem*, int);
 
     void limitSliderMoved(int);
     void secondaryCheckBoxClicked();
 
+    void patchFilterChanged(QString);
+    void clearPatchFilter();
 
 private:
     Ui::MixerTest *ui;
@@ -39,8 +40,10 @@ private:
     bool isShowingDetail;
     void updateUi();
     QList<int> lastSizes;
+    void setupFilterCombo();
+    void setupSplitter();
+    void setupSignalsAndSlots();
 
-    void configureHeader(QTreeWidget* treeWidget);
 };
 
 #endif // MIXERTEST_H

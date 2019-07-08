@@ -9,7 +9,9 @@ HEADERS     = treeitem.h \
               mixerslider.h \
               mixertest.h \
               mixertrack.h \
+              mixertreewidget.h \
               noneditableitemdelegate.h \
+              patchcombobox.h \
               tracklist.h \
               treemodel.h
 RESOURCES   = simpletreemodel.qrc
@@ -21,7 +23,9 @@ SOURCES     = treeitem.cpp \
               mixerslider.cpp \
               mixertest.cpp \
               mixertrack.cpp \
+              mixertreewidget.cpp \
               noneditableitemdelegate.cpp \
+              patchcombobox.cpp \
               tracklist.cpp \
               treemodel.cpp \
               main.cpp
@@ -32,4 +36,5 @@ INSTALLS += target
 
 FORMS += \
     mixercontrol.ui \
-    mixertest.ui
+    mixertest.ui \
+    mixertreewidget.ui
