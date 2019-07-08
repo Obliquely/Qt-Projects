@@ -37,6 +37,9 @@ void MixerSlider::setSecondaryMode(bool on)
 
 void MixerSlider::paintEvent(QPaintEvent *ev) {
 
+     if ((false)) {     // shut up compiler warnings about unused parameter ev and then non-executed code
+           QSlider::paintEvent(ev);
+           }
 
       QColor buttonColor = QApplication::palette().color(QPalette::Button);
       QColor secondaryColor = QApplication::palette().color(QPalette::Highlight);
